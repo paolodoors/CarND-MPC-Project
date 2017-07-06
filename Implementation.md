@@ -8,7 +8,7 @@ Simply put, MPC computes several steps ahead in time on where the car should be 
 
 To achieve this we have to track the car state:
 
-```
+```cpp
 px  # position in X
 py  # position in Y
 psi # car's heading direction
@@ -18,7 +18,7 @@ epsi# error psi
 ```
 and the actuators:
 
-```
+```cpp
 delta   # steering angle
 a       # throttle (or acceleration)
 ```
@@ -69,7 +69,7 @@ To meet this I thouth that ```dt``` should be set to multiple to the minimum lat
 I started with 10 points, that did quiet well, the prediected trajectory followed the reference well, but sometimes it was a little wooby. So I started to step down until 6 that was the magic number where the car followed the reference very well with almost no sinusoidal moves. (with just 5 step the car couldn't follow the reference at all).
 
 In code this is set at:
-```
+```cpp
 size_t N = 6;
 double dt = 0.1;
 ```
@@ -94,7 +94,7 @@ for (int i = 0; i < pts_size; i++) {
 The model should be able to deal with a 100ms latency. To overcome this issue we have to estimate where the car will be after those 100ms and since I've used ```dt = 0.1```, that value was the first prediction step.
 
 In code these are the lines:
-```python
+```cpp
 result.push_back(solution.x[delta_start]);
 result.push_back(solution.x[a_start]);
 ```
